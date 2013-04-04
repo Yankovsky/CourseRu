@@ -8,7 +8,16 @@
             <fieldset>
                 <legend>Регистрация</legend>
                 <div class="span6" style="border-right: 1px solid #e5e5e5;">
-                    {% include 'form_fields.html' with form=form %}
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class='control-group {%if field.errors %}error{% endif %}'>
+                            <label class='control-label' for='{{ field.name }}'>{{ field.label }}</label>
+                            <div class='controls'>
+                                {{ field }}
+                                <span class='help-inline'>{{ field.errors }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
                     <div class='control-group'>
                         <div class='controls'>
                             <button type='submit' class='btn btn-primary'>Зарегистрироваться</button>

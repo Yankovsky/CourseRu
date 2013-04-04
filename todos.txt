@@ -1,7 +1,6 @@
-instructor's course view
-course edit form && page
+instructor's course view {ouput all fields; manage materials}
+rename info => news
 add video => add material, form, page
-add info => add material, form, page
 add document => add material, form, page
 datetime везде
 тексты и внешний вид ерроров в формах

@@ -15,3 +15,7 @@
     max-height: 100px;
     max-width: 165px;
 }
+
+.nodata {
+    text-align: center;
+}

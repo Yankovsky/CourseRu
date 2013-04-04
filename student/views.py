@@ -40,8 +40,8 @@ def course(request, course_id, template_name='student/course.html'):
     if course in request.user.userprofile.courses.all():
         materials = Material.objects.filter(course=course).filter(appear_date__lte=datetime.utcnow().replace(tzinfo=utc)).order_by('appear_date')
         videos = Video.objects.filter(material__in=materials)
-        infos = Video.objects.filter(material__in=materials)
-        documents = Video.objects.filter(material__in=materials)
+        infos = Information.objects.filter(material__in=materials)
+        documents = Document.objects.filter(material__in=materials)
         return render(request, template_name, {'course': course, 'materials': materials, 'videos': videos, 'infos': infos, 'documents': documents})
     else:
         return HttpResponseRedirect(reverse('main.views.course', kwargs={'course_id': course_id}))

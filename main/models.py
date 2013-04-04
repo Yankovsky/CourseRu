@@ -39,7 +39,6 @@ class Material(models.Model):
 
 class Video(models.Model):
     material = models.ForeignKey(Material, verbose_name=u'Материал')
-    name = models.CharField(max_length=100, verbose_name=u'Заголовок видео')
     youtube_video_id = models.CharField(max_length=32, verbose_name=u'YouTube video ID')
 
     def __repr__(self):
@@ -49,7 +48,6 @@ class Video(models.Model):
 
 class Document(models.Model):
     material = models.ForeignKey(Material, verbose_name=u'Материал')
-    name = models.CharField(max_length=200, verbose_name=u'Заголовок файла')
     doc = models.FileField(upload_to='docs', verbose_name=u'Файл')
 
     def __repr__(self):
@@ -59,7 +57,6 @@ class Document(models.Model):
 
 class Information(models.Model):
     material = models.ForeignKey(Material, verbose_name=u'Материал')
-    name = models.CharField(max_length=200, verbose_name=u'Заголовок')
     text = models.TextField(verbose_name=u'Текст')
 
     def __repr__(self):
