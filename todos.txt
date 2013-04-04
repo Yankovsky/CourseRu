@@ -1,4 +1,4 @@
-instructor's course view {ouput all fields; manage materials}
+instructor's course view {output all fields; manage materials}
 rename info => news
 add video => add material, form, page
 add document => add material, form, page
@@ -8,3 +8,6 @@ validation of course form: not null values!!! ;P
 дизайн формы переделать, форму в один файл
 дизайн кнопки "сабмит"
 заголовки везде одинаковые, как в формах
+get parameters instead of /tab/name/
+
+{FULL TODOS HERE}

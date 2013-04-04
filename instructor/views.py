@@ -95,7 +95,9 @@ def course(request, course_id, tab=None, template_name='instructor/course.html')
         videos = Video.objects.filter(material__in=materials).order_by('-material__appear_date')
         infos = Information.objects.filter(material__in=materials).order_by('-material__appear_date')
         documents = Document.objects.filter(material__in=materials).order_by('-material__appear_date')
-        return render(request, template_name, {'course': course, 'materials': materials, 'videos': videos, 'infos': infos, 'documents': documents, 'tab': tab})
+        userprofiles = course.userprofile_set.all()
+        users = [userprofile.user for userprofile in userprofiles]
+        return render(request, template_name, {'course': course, 'materials': materials, 'videos': videos, 'infos': infos, 'documents': documents, 'tab': tab, 'users': users})
     else:
         return HttpResponseRedirect(reverse('main.views.course', kwargs={'course_id': course_id}))
 

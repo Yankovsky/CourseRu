@@ -163,7 +163,13 @@
 
 
             <div class="tab-pane {% if tab == 'users' %}active{% endif %}" id="users">
-
+                <ul>
+                    {% for user in users %}
+                        <li>{{ user }} {% if user.userprofile.is_instructor %}<span class="label label-info">Преподаватель</span>{% endif %}</li>
+                    {% empty %}
+                        <i>Нет участников курса</i>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     {% else %} <!-- unapproved course -->
