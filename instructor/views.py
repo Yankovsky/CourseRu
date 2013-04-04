@@ -84,7 +84,7 @@ def course(request, course_id, tab=None, template_name='instructor/course.html')
     course = get_object_or_404(Course, pk=course_id)
 
     if not tab is None:
-        if not tab in ['news', 'main', 'video', 'users', 'files']:
+        if not tab in ['news', 'main', 'videos', 'users', 'files']:
             return HttpResponseNotFound()
     else:
         tab = 'main'
@@ -111,7 +111,7 @@ def courses(request, template_name='instructor/courses.html'):
 
 
 @instructor_login_required
-def add_information(request, course_id, template_name="instructor/addinfo.html", post_add_information_redirect=None):
+def add_news(request, course_id, template_name="instructor/addinfo.html", post_add_information_redirect=None):
     course = get_object_or_404(Course, pk=course_id)
 
     if not course in request.user.userprofile.courses.all():
@@ -124,7 +124,7 @@ def add_information(request, course_id, template_name="instructor/addinfo.html",
             material = form1.save(commit=False)
             info = form2.save(commit=False)
             material.author = request.user
-            material.date = time.strftime("%Y-%m-%d %H:%M:%S")
+            material.date = datetime.utcnow().replace(tzinfo=utc)
             material.course = course
             material.save()
             info.material = material
@@ -142,7 +142,7 @@ def add_information(request, course_id, template_name="instructor/addinfo.html",
 
 
 @instructor_login_required
-def edit_information(request, course_id, info_id, template_name="instructor/editinfo.html", post_edit_information_redirect=None):
+def edit_news(request, course_id, info_id, template_name="instructor/editinfo.html", post_edit_information_redirect=None):
     course = get_object_or_404(Course, pk=course_id)
     info = get_object_or_404(Information, pk=info_id)
     material = info.material
@@ -167,8 +167,9 @@ def edit_information(request, course_id, info_id, template_name="instructor/edit
 
     return render(request, template_name, {'course': course, 'form1': form1, 'form2': form2})
 
+
 @instructor_login_required
-def delete_information(request, course_id, info_id, post_delete_information_redirect=None):
+def delete_news(request, course_id, info_id, post_delete_information_redirect=None):
     course = get_object_or_404(Course, pk=course_id)
     info = get_object_or_404(Information, pk=info_id)
     material = info.material
@@ -183,24 +184,156 @@ def delete_information(request, course_id, info_id, post_delete_information_redi
 
     return HttpResponseRedirect(post_delete_information_redirect)
 
-# # upload videos, materials, infos
-# @instructor_login_required
-# def upload(request, course_id, template_name='instructor/upload.html'):
-#     course = get_object_or_404(Course, pk=course_id)
-#
-#     if not (course in request.user.userprofile.courses.all()):
-#         return HttpResponseForbidden()
-#
-#     if request.method == 'POST':
-#         form = DocumentForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             doc = form.save(commit=False)
-#             doc.course = course
-#             doc.upload_date = datetime.utcnow().replace(tzinfo=utc)
-#             doc.save()
-#             return HttpResponseRedirect(reverse('instructor.views.upload', kwargs={'course_id': course.id}))
-#     else:
-#         form = DocumentForm()
-#
-#     documents = Document.objects.filter(course=course).order_by('appear_date')
-#     return render(request, template_name, {'documents': documents, 'form': form, 'course': course})
+# # # # #
+# # # # #
+
+@instructor_login_required
+def add_video(request, course_id, template_name="instructor/addinfo.html", post_add_information_redirect=None):
+    course = get_object_or_404(Course, pk=course_id)
+
+    if not course in request.user.userprofile.courses.all():
+        return HttpResponseForbidden()
+
+    if request.method == 'POST':
+        form1 = MaterialForm(request.POST)
+        form2 = VideoForm(request.POST)
+        if form1.is_valid() and form2.is_valid():
+            material = form1.save(commit=False)
+            video = form2.save(commit=False)
+            material.author = request.user
+            material.date = datetime.utcnow().replace(tzinfo=utc)
+            material.course = course
+            material.save()
+            video.material = material
+            video.save()
+
+            if post_add_information_redirect is None:
+                post_add_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id, 'tab': 'videos'})
+
+            return HttpResponseRedirect(post_add_information_redirect)
+    else:
+        form1 = MaterialForm()
+        form2 = VideoForm()
+
+    return render(request, template_name, {'course': course, 'form1': form1, 'form2': form2})
+
+
+@instructor_login_required
+def edit_video(request, course_id, video_id, template_name="instructor/editinfo.html", post_edit_information_redirect=None):
+    course = get_object_or_404(Course, pk=course_id)
+    video = get_object_or_404(Video, pk=video_id)
+    material = video.material
+
+    if not course in request.user.userprofile.courses.all():
+        return HttpResponseForbidden()
+
+    if request.method == 'POST':
+        form1 = MaterialForm(request.POST, instance=material)
+        form2 = VideoForm(request.POST, instance=video)
+        if form1.is_valid() and form2.is_valid():
+            form1.save()
+            form2.save()
+
+            if post_edit_information_redirect is None:
+                post_edit_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id, 'tab': 'videos'})
+
+            return HttpResponseRedirect(post_edit_information_redirect)
+    else:
+        form1 = MaterialForm(instance=material)
+        form2 = VideoForm(instance=video)
+
+    return render(request, template_name, {'course': course, 'form1': form1, 'form2': form2})
+
+
+@instructor_login_required
+def delete_video(request, course_id, video_id, post_delete_information_redirect=None):
+    course = get_object_or_404(Course, pk=course_id)
+    video = get_object_or_404(Video, pk=video_id)
+    material = video.material
+
+    if not course in request.user.userprofile.courses.all():
+        return HttpResponseForbidden()
+
+    material.delete()
+
+    if post_delete_information_redirect is None:
+        post_delete_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id, 'tab': 'videos'})
+
+    return HttpResponseRedirect(post_delete_information_redirect)
+
+# # # # #
+# # # # #
+
+@instructor_login_required
+def add_file(request, course_id, template_name="instructor/addinfo.html", post_add_information_redirect=None):
+    course = get_object_or_404(Course, pk=course_id)
+
+    if not course in request.user.userprofile.courses.all():
+        return HttpResponseForbidden()
+
+    if request.method == 'POST':
+        form1 = MaterialForm(request.POST)
+        form2 = DocumentForm(request.POST, request.FILES)
+        if form1.is_valid() and form2.is_valid():
+            material = form1.save(commit=False)
+            file = form2.save(commit=False)
+            material.author = request.user
+            material.date = datetime.utcnow().replace(tzinfo=utc)
+            material.course = course
+            material.save()
+            file.material = material
+            file.save()
+
+            if post_add_information_redirect is None:
+                post_add_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id, 'tab': 'files'})
+
+            return HttpResponseRedirect(post_add_information_redirect)
+    else:
+        form1 = MaterialForm()
+        form2 = DocumentForm()
+
+    return render(request, template_name, {'course': course, 'form1': form1, 'form2': form2})
+
+
+@instructor_login_required
+def edit_file(request, course_id, file_id, template_name="instructor/editinfo.html", post_edit_information_redirect=None):
+    course = get_object_or_404(Course, pk=course_id)
+    file = get_object_or_404(Document, pk=file_id)
+    material = file.material
+
+    if not course in request.user.userprofile.courses.all():
+        return HttpResponseForbidden()
+
+    if request.method == 'POST':
+        form1 = MaterialForm(request.POST, instance=material)
+        form2 = DocumentForm(request.POST, request.FILES, instance=file)
+        if form1.is_valid() and form2.is_valid():
+            form1.save()
+            form2.save()
+
+            if post_edit_information_redirect is None:
+                post_edit_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id, 'tab': 'files'})
+
+            return HttpResponseRedirect(post_edit_information_redirect)
+    else:
+        form1 = MaterialForm(instance=material)
+        form2 = DocumentForm(instance=file)
+
+    return render(request, template_name, {'course': course, 'form1': form1, 'form2': form2})
+
+
+@instructor_login_required
+def delete_file(request, course_id, file_id, post_delete_information_redirect=None):
+    course = get_object_or_404(Course, pk=course_id)
+    file = get_object_or_404(Document, pk=file_id)
+    material = file.material
+
+    if not course in request.user.userprofile.courses.all():
+        return HttpResponseForbidden()
+
+    material.delete()
+
+    if post_delete_information_redirect is None:
+        post_delete_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id, 'tab': 'files'})
+
+    return HttpResponseRedirect(post_delete_information_redirect)

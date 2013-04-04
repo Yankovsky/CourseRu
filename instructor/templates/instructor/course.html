@@ -34,7 +34,7 @@
             <li class="{% if tab == 'main' %}active{% endif %}"><a href="#main" data-toggle="tab">Информация</a></li>
             <li class="{% if tab == 'news' %}active{% endif %}"><a href="#news" data-toggle="tab">Новости</a></li>
             <li class="{% if tab == 'files' %}active{% endif %}"><a href="#files" data-toggle="tab">Файлы</a></li>
-            <li class="{% if tab == 'video' %}active{% endif %}"><a href="#video" data-toggle="tab">Видео</a></li>
+            <li class="{% if tab == 'videos' %}active{% endif %}"><a href="#videos" data-toggle="tab">Видео</a></li>
             <li class="{% if tab == 'users' %}active{% endif %}"><a href="#users" data-toggle="tab">Студенты</a></li>
         </ul>
 
@@ -108,7 +108,7 @@
                 <div class="row">
                     <div class="span12">
                         <p class="pull-right">
-                            <a href="{% url 'instructor.views.add_information' course.id %}" class="btn btn-success"><i class="icon-plus icon-white"></i> Добавить информацию</a>
+                            <a href="{% url 'instructor.views.add_news' course.id %}" class="btn btn-success"><i class="icon-plus icon-white"></i> Добавить информацию</a>
                         </p>
                     </div>
                 </div>
@@ -134,13 +134,13 @@
                                     <td>{{ info.material.appear_date|date:'d.m.Y H:i' }}</td>
                                     <td>{{ info.text }}</td>
                                     <td>
-                                        <a href="{% url 'instructor.views.edit_information' course.id info.id %}" class="btn btn-mini"><i class="icon-pencil"></i> Редактировать</a>
-                                        <a href="{% url 'instructor.views.delete_information' course.id info.id %}" class="btn btn-danger btn-mini"><i class="icon-remove icon-white"></i> Удалить</a>
+                                        <a href="{% url 'instructor.views.edit_news' course.id info.id %}" class="btn btn-mini"><i class="icon-pencil"></i> Редактировать</a>
+                                        <a href="{% url 'instructor.views.delete_news' course.id info.id %}" class="btn btn-danger btn-mini"><i class="icon-remove icon-white"></i> Удалить</a>
                                     </td>
                                 </tr>
                             {% empty %}
                                 <tr>
-                                    <td colspan="5" style="text-align: center">
+                                    <td colspan="6" style="text-align: center">
                                         <i>Нет данных</i>
                                     </td>
                                 </tr>
@@ -153,12 +153,98 @@
 
 
             <div class="tab-pane {% if tab == 'files' %}active{% endif %}" id="files">
-
+                <div class="row">
+                    <div class="span12">
+                        <p class="pull-right">
+                            <a href="{% url 'instructor.views.add_file' course.id %}" class="btn btn-success"><i class="icon-plus icon-white"></i> Добавить информацию</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span12">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Заголовок</th>
+                                <th>Автор</th>
+                                <th>Дата размещения</th>
+                                <th>Дата появления</th>
+                                <th>Файл</th>
+                                <th>Действия</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for file in files %}
+                                <tr>
+                                    <td>{{ file.material.name }}</td>
+                                    <td>{{ file.material.author }}</td>
+                                    <td>{{ file.material.date|date:'d.m.Y' }}</td>
+                                    <td>{{ file.material.appear_date|date:'d.m.Y H:i' }}</td>
+                                    <td><a href="{{ file.doc.url }}">{{ file.doc.name }}</a></td>
+                                    <td>
+                                        <a href="{% url 'instructor.views.edit_file' course.id file.id %}" class="btn btn-mini"><i class="icon-pencil"></i> Редактировать</a>
+                                        <a href="{% url 'instructor.views.delete_file' course.id file.id %}" class="btn btn-danger btn-mini"><i class="icon-remove icon-white"></i> Удалить</a>
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="6" style="text-align: center">
+                                        <i>Нет данных</i>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
 
-            <div class="tab-pane {% if tab == 'video' %}active{% endif %}" id="video">
-
+            <div class="tab-pane {% if tab == 'videos' %}active{% endif %}" id="videos">
+                <div class="row">
+                    <div class="span12">
+                        <p class="pull-right">
+                            <a href="{% url 'instructor.views.add_video' course.id %}" class="btn btn-success"><i class="icon-plus icon-white"></i> Добавить видео</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span12">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Заголовок</th>
+                                <th>Автор</th>
+                                <th>Дата размещения</th>
+                                <th>Дата появления</th>
+                                <th>Видео</th>
+                                <th>Действия</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for video in videos %}
+                                <tr>
+                                    <td>{{ video.material.name }}</td>
+                                    <td>{{ video.material.author }}</td>
+                                    <td>{{ video.material.date|date:'d.m.Y' }}</td>
+                                    <td>{{ video.material.appear_date|date:'d.m.Y H:i' }}</td>
+                                    <td>{{ video.youtube_video_id }}</td>
+                                    <td>
+                                        <a href="{% url 'instructor.views.edit_video' course.id video.id %}" class="btn btn-mini"><i class="icon-pencil"></i> Редактировать</a>
+                                        <a href="{% url 'instructor.views.delete_video' course.id video.id %}" class="btn btn-danger btn-mini"><i class="icon-remove icon-white"></i> Удалить</a>
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="6" style="text-align: center">
+                                        <i>Нет данных</i>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
 

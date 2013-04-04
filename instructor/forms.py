@@ -32,3 +32,13 @@ class InformationForm(ModelForm):
     class Meta:
         model = Information
         fields = ('text',)
+
+class VideoForm(ModelForm):
+    class Meta:
+        model = Video
+        fields = ('youtube_video_id',)
+
+class DocumentForm(ModelForm):
+    class Meta:
+        model = Document
+        fields = ('doc',)
