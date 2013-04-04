@@ -54,12 +54,12 @@ def edit_course(request, course_id, template_name='instructor/editcourse.html', 
         return HttpResponseForbidden()
 
     if request.method == 'POST':
-        form = edit_course_form(request.POST, request.FILES)
+        form = edit_course_form(request.POST, request.FILES, instance=course)
         if form.is_valid():
             form.save()
 
             if post_course_edit_redirect is None:
-                post_course_edit_redirect = reverse('main.views.course', kwargs={'course_id': course.id})
+                post_course_edit_redirect = reverse('instructor.views.course', kwargs={'course_id': course.id})
             return HttpResponseRedirect(post_course_edit_redirect)
     else:
         form = edit_course_form(instance=course)
