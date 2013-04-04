@@ -1,0 +1,11 @@
+<form action='{{ action }}' method='post' class='form-horizontal'>
+    <fieldset>
+        <legend>{{ legend }}</legend>
+        {% include 'form_fields.html' with form=form %}
+        <div class='control-group'>
+            <div class='controls'>
+                <button type='submit' class='btn btn-primary'>{{ submit }}</button>
+            </div>
+        </div>
+    </fieldset>
+</form>

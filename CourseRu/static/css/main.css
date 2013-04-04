@@ -1,0 +1,17 @@
+.course-card {
+    height: 360px;
+}
+
+.course-card .course-logo {
+    width: 280px;
+    height: 170px;
+}
+
+.course-card .course-short-description {
+    height: 100px;
+}
+
+.course-logo-small {
+    max-height: 100px;
+    max-width: 165px;
+}

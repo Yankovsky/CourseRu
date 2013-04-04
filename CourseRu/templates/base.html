@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>CourseRu - {% block title %}{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- Bootstrap -->
+        <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+        <!-- App -->
+        <link href="/static/css/main.css" rel="stylesheet">
+
+        <!-- Responsive -->
+        {% comment %}<link href="/static/css/bootstrap-responsive.css" rel="stylesheet">{% endcomment %}
+
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+      <script src="/js/html5shiv.js"></script>
+    <![endif]-->
+
+        <!-- Fav and touch icons -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144"
+              href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    </head>
+    <body>
+        <div id="wrap">
+            <div class="navbar navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <ul class="inline" style="text-align: right;">
+                            <li>
+                                <a href="{% url 'main.views.index' %}" class="btn btn-link">Главная</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'main.views.feedback' %}" class="btn btn-link">Отзыв о работе сайта</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'main.views.about' %}" class="btn btn-link">О нас</a>
+                            </li>
+
+                            {% if user.is_authenticated %}
+                                <li>
+                                    <a href="{% url 'accounts.views.profile' %}" class="btn btn-link">
+                                        {{ user.username }}
+                                    </a>
+                                </li>
+                                {% if user.userprofile.is_student %}
+                                    <li>
+                                        <a href="{% url 'student.views.courses' %}" class="btn btn-link">Мои курсы</a>
+                                    </li>
+                                {% endif %}
+                                {% if user.userprofile.is_instructor %}
+                                    <li>
+                                        <a href="{% url 'instructor.views.courses' %}" class="btn btn-link">Мои курсы</a>
+                                    </li>
+                                {% endif %}
+                                <li>
+                                    <a href="{% url 'django.contrib.auth.views.logout' %}" class="btn btn-link">
+                                        Выйти
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{% url 'django.contrib.auth.views.login' %}" class="btn btn-link">
+                                        Вход
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <header class="container clearfix" style="padding-top: 55px;margin-bottom: 10px;">
+                <div style="float: left; display: block;">
+                    <a href="{% url 'index' %}" id="logo">
+                        <img src="/static/logo.png" alt="logo" width="120">
+                    </a>
+                </div>
+                <div style="float: left; padding-left: 50px; font-family: 'Helvetica Neue'; color: #444444; font-size: 60px;">
+                    <h1 id="header">CourseRu</h1>
+
+                    <p class="lead">Онлайн-обучение</p>
+                </div>
+            </header>
+            <div class="container">
+                <div class="row">
+                    {% if messages %}
+                        <ul class="messages unstyled">
+                            {% for message in messages %}
+                                <li{% if message.tags %}
+                                    class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                {% block content %}
+
+                {% endblock %}
+            </div>
+        </div>
+        <script src="/static/js/jquery-1.9.1.js"></script>
+        <script src="/static/bootstrap/js/bootstrap.js"></script>
+    </body>
+</html>
+
+
+{% comment %}feedback modal window{% endcomment %}
+{% comment %}
+<a href="#myModal" data-toggle="modal">Отзыв о работе сайта</a>{% endcomment %}{% comment %}
+                            <!-- Диалог сохранения отзыва -->
+                            <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog"
+                                 aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+                                    </button>
+                                    <h3 id="myModalLabel">Отзыв о нашем сайте</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <textarea class="pull-left" rows="6" style="width: 97%;"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn" data-dismiss="modal" aria-hidden="true">Отмена</button>
+                                    <button class="btn btn-primary">Отослать</button>
+                                </div>
+                            </div>
+                        </li>
+                        <li style="display: inline; padding: 0 0 0 40px;">
+                            <a href="Ссылка на подписку">Подписаться на новости</a>
+                        </li>{% endcomment %}{% comment %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endcomment %}

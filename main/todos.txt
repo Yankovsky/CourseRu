@@ -1,0 +1,11 @@
+instructor's course view
+course edit form && page
+add video => add material, form, page
+add info => add material, form, page
+add document => add material, form, page
+datetime везде
+тексты и внешний вид ерроров в формах
+validation of course form: not null values!!! ;P
+дизайн формы переделать, форму в один файл
+дизайн кнопки "сабмит"
+заголовки везде одинаковые, как в формах

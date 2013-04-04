@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}CourseRu | Мои курсы{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="span12">
+            <p class="lead">
+                Список моих курсов
+            </p>
+        </div>
+    </div>
+    {% if Courses %}
+        <table class="table">
+            <thead>
+                <th>Логотип</th>
+                <th>Название</th>
+                <th>Организация</th>
+                <th>Дата начала</th>
+            </thead>
+            <tbody>
+            {% for course in Courses %}
+                <tr>
+                <td>
+                    <a href="{% url 'student.views.course' course.id %}">
+                        <img src="{{ MEDIA_URL }}{{ course.logo }}" alt="{{ course.name }}" class="course-logo-small">
+                    </a>
+                </td>
+                <td>
+                    <a href="{% url 'student.views.course' course.id %}">
+                        {{ course.name }}
+                    </a>
+                </td>
+                <td>
+                    {{ course.organisation }}
+                </td>
+                <td>
+                    {{ course.start_date }}
+                </td>
+                </tr>
+            {% empty %}
+                <tr>
+                <td colspan="4" align="center">
+                    <i>Нет курсов</i>
+                </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        Нет курсов.
+    {% endif %}
+{% endblock %}

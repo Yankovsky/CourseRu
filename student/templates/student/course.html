@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}CourseRu | {{ course.name }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="span12">
+            <p class="lead">{{ course.name }}</p>
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#main" data-toggle="tab">Курс</a></li>
+        <li><a href="#news" data-toggle="tab">Лента</a></li>
+        <li><a href="#info" data-toggle="tab">Информация</a></li>
+        <li><a href="#files" data-toggle="tab">Материалы</a></li>
+        <li><a href="#video" data-toggle="tab">Видео</a></li>
+        <li><a href="#users" data-toggle="tab">Студенты</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="main">
+            <div class="row">
+                <div class="span8">
+                    <div>{{ course.description }}</div>
+                </div>
+                <div class="span4">
+                    <div class="well">
+                        <div>{{ course.organisation }}</div>
+                        <div>{{ course.start_date }} - {{ course.end_date }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="news">
+            <table class="table">
+                <thead>
+                    <td>Информация</td>
+                    <td>Дата</td>
+                    <td>Данные</td>
+                </thead>
+                <tbody>
+                {% for material in materials %}
+                    <tr>
+                        <td>{{ material.name }}</td>
+                        <td>{{ material.appear_date|date:'d.m.Y H:i' }}</td>
+                        <td>
+                            {% for info in material.information_set.all %}
+                                {{ info.text }}
+                            {% endfor %}
+                            {% for video in material.video_set.all %}
+                                {{ video.name }}
+                            {% endfor %}
+                            {% for doc in material.document_set.all %}
+                                {{ doc.name}}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3" align="center">
+                            <i>Нет данных</i>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane" id="info">
+            <table class="table">
+                <thead>
+                    <td>Информация</td>
+                    <td>Дата</td>
+                </thead>
+                <tbody>
+                    {% for info in infos %}
+                        <tr>
+                            <td>{{ info.text }}</td>
+                            <td>{{ info.material.appear_date|date:'d.m.Y H:i' }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="2" align="center">
+                                <i>Нет данных</i>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane" id="files">
+            <table class="table">
+                <thead>
+                    <th>Файл</th>
+                    <th>Название</th>
+                    <th>Дата</th>
+                </thead>
+                <tbody>
+                {% for document in documents %}
+                    <tr>
+                        <td><i class="icon-file"></i> <a href="{{ document.doc.url }}">{{ document.doc.name }}</a></td>
+                        <td>{{ document.na me }}</td>
+                        <td>{{ document.material.appear_date|date:'d.m.Y H:i' }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3" align="center">
+                            <i>Нет файлов</i>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane" id="video">
+            {% for lecture in videos %}
+                <div>
+                    <div>
+                        {{ lecture.name }}
+                    </div>
+                    <iframe width="420" height="315" src="http://www.youtube.com/embed/{{ lecture.youtube_video_id }}"
+                            frameborder="0" allowfullscreen></iframe>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="tab-pane" id="users">
+            <ul>
+            {% for userprofile in course.userprofile_set.all %}
+                {% if userprofile.is_student %}
+                    <li>{{ userprofile.user.username }}</li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

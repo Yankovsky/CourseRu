@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}CourseRu | Мои курсы{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="span12">
+            <div class="pull-left">
+                <p class="lead">Список моих курсов</p>
+            </div>
+            <div class="pull-right">
+                <a href="{% url 'instructor.views.add_course' %}" class="btn btn-success"><i class="icon-plus icon-white"></i> Новый курс</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <b>Размещённые курсы:</b>
+            <ul>
+                {% for course in Courses %}
+                    <li>
+                        <a href="{% url 'instructor.views.course' course.id %}">
+                            {{ course.name }}
+                        </a>
+                    </li>
+                {% empty %}
+                    <i>Нет курсов</i>
+                {% endfor %}
+            </ul>
+            <hr />
+            <b>Подтверждённые заявки на новые курсы:</b>
+            <ul>
+                {% for course in Approved %}
+                    <li>
+                        <a href="{% url 'instructor.views.course' course.id %}">
+                            {{ course.name }}
+                        </a>
+                    </li>
+                {% empty %}
+                    <i>Нет курсов</i>
+                {% endfor %}
+            </ul>
+            <hr />
+            <b>Заявки на новые курсы:</b>
+            <ul>
+                {% for course in Requests %}
+                    <li>
+                        <a href="{% url 'instructor.views.course' course.id %}">
+                            {{ course.name }}
+                        </a>
+                    </li>
+                {% empty %}
+                    <i>Нет курсов</i>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

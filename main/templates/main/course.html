@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Курс {{ course.name }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="span12">
+            <p class="lead">
+                {{ course.name }}
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span8">
+            <div>{{ course.description }}</div>
+        </div>
+        <div class="span4">
+            <div class="well">
+                <div>{{ course.organisation }}</div>
+                <div>{{ course.start_date }} - {{ course.end_date }}</div>
+            </div>
+
+            {% if user.is_authenticated %}
+                <div class="well">
+                {% if user.userprofile.is_student %}
+                    {% if course in user.userprofile.courses.all %}
+                        Вы подписаны на данный курс
+                        <a href="{% url 'student.views.course' course.id %}" class="btn"><i class="icon-eye-open"></i> Страница курса</a>
+                    {% else %}
+                        У Вас есть возможность участия
+                        <a href="{% url 'student.views.apply_for_course' course.id %}" class="btn btn-success"><i class="icon-plus icon-white"></i> Вступить</a>
+                    {% endif %}
+                {% endif %}
+                {% if user.userprofile.is_instructor %}
+                    {% if course in user.userprofile.courses.all %}
+                        <a href="{% url 'instructor.views.course' course.id %}">Страница курса</a>
+                    {% endif %}
+                {% endif %}
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}

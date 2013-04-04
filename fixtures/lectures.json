@@ -1,0 +1,33 @@
+{
+    "pk": 1,
+    "model": "main.lecture",
+    "fields": {
+        "date": "2013-03-04",
+        "course": 1,
+        "order": 2,
+        "name": "django: Web Development for Perfectionists with Deadlines",
+        "youtube_video_id": "p-WXiqrzAf8"
+    }
+},
+{
+"pk": 2,
+"model": "main.lecture",
+"fields": {
+"date": "2013-03-04",
+"course": 1,
+"order": 1,
+"name": "Some Python Integrated Development Environments",
+"youtube_video_id": "t6pdG1oWFX4"
+}
+},
+{
+"pk": 3,
+"model": "main.lecture",
+"fields": {
+"date": "2013-03-04",
+"course": 1,
+"order": 3,
+"name": "Google I/O 2008 - Python, Django, and App Engine",
+"youtube_video_id": "v1gTI4BOPUw"
+}
+}

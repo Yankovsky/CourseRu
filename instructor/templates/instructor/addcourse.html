@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block title %}CourseRu | Создание нового курса{% endblock %}
+
+{% block content %}
+    {% include 'horizontal_form.html' with form=form legend='Заявка на создание нового курса' submit='Отправить' %}
+{% endblock %}
