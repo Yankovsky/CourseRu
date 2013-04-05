@@ -11,4 +11,6 @@ placeholder for video
 неподтвержденные курсы??просто удалить???
 instructor courses tabs hashes
 javascript datetime now
-{FULL TODOS HERE}
+MAKE COURSE AVAILABLE
+event model
+HEROKU
