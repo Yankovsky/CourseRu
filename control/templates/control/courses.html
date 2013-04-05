@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Управление{% endblock %}
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <th>Название</th>
+            <th>Автор</th>
+            <th>Дата</th>
+            <th>Заявка</th>
+            <th>Действия</th>
+        </thead>
+        <tbody>
+        {% for course in requests %}
+            <tr>
+                <td>{{ course.name }}</td>
+                <td>{{ course.author }}</td>
+                <td>{{ course.date }}</td>
+                <td>{{ course.admin_summary }}</td>
+                <td>
+                    <a class="btn btn-success" href="{% url 'control.views.approve' course.id %}"><i class="icon-ok icon-white"></i> Одобрить</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

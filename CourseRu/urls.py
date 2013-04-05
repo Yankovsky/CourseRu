@@ -11,6 +11,7 @@ urlpatterns = patterns('',
                        url(r'^student/', include('student.urls')),
                        url(r'^instructor/', include('instructor.urls')),
                        url(r'^admin/', include(admin.site.urls)),
+                       url(r'^control/', include('control.urls')),
 )
 
 if settings.DEBUG:

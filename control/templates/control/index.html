@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Управление{% endblock %}
+
+{% block content %}
+    <ul>
+        <li>
+            <a href="{% url 'control.views.courses' %}">Управление заявками на курсы</a>
+        </li>
+        <li>
+            <a href="{% url 'control.views.feedbacks' %}">Управление обратной связью</a>
+        </li>
+    </ul>
+{% endblock %}
