@@ -3,5 +3,5 @@
 {% block title %}CourseRu | Добавление информации к курсу {{ course.name }}{% endblock %}
 
 {% block content %}
-    {% include 'twice_form.html' with form1=form1 form2=form2 legend='Создание информации для курса' submit='Создать' %}
+    {% include 'twice_form.html' with form1=form1 form2=form2 legend='Создание информации для курса' submit='Создать' multipart='enctype="multipart/form-data"' %}
 {% endblock %}

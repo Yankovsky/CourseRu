@@ -97,7 +97,7 @@ def course(request, course_id, tab=None, template_name='instructor/course.html')
         documents = Document.objects.filter(material__in=materials).order_by('-material__appear_date')
         userprofiles = course.userprofile_set.all()
         users = [userprofile.user for userprofile in userprofiles]
-        return render(request, template_name, {'course': course, 'materials': materials, 'videos': videos, 'infos': infos, 'documents': documents, 'tab': tab, 'users': users})
+        return render(request, template_name, {'course': course, 'materials': materials, 'videos': videos, 'infos': infos, 'files': documents, 'tab': tab, 'users': users})
     else:
         return HttpResponseRedirect(reverse('main.views.course', kwargs={'course_id': course_id}))
 
@@ -272,7 +272,7 @@ def add_file(request, course_id, template_name="instructor/addinfo.html", post_a
         return HttpResponseForbidden()
 
     if request.method == 'POST':
-        form1 = MaterialForm(request.POST)
+        form1 = MaterialForm(request.POST, request.FILES)
         form2 = DocumentForm(request.POST, request.FILES)
         if form1.is_valid() and form2.is_valid():
             material = form1.save(commit=False)

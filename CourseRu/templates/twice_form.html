@@ -1,4 +1,4 @@
-<form action='{{ action }}' method='post' class='form-horizontal'>
+<form action='{{ action }}' method='post' class='form-horizontal' {{ multipart }}>
     <fieldset>
         <legend>{{ legend }}</legend>
         {% csrf_token %}
@@ -7,7 +7,11 @@
                 <label class='control-label' for='{{ field.name }}'>{{ field.label }}</label>
                 <div class='controls'>
                     {{ field }}
-                    <span class='help-inline'>{{ field.errors }}</span>
+                </div>
+                <div class="controls">
+                    {% for error in field.errors %}
+                        <p class="text-error">{{ error }}</p>
+                    {% endfor %}
                 </div>
             </div>
         {% endfor %}
@@ -16,7 +20,11 @@
                 <label class='control-label' for='{{ field.name }}'>{{ field.label }}</label>
                 <div class='controls'>
                     {{ field }}
-                    <span class='help-inline'>{{ field.errors }}</span>
+                </div>
+                <div class="controls">
+                    {% for error in field.errors %}
+                        <p class="text-error">{{ error }}</p>
+                    {% endfor %}
                 </div>
             </div>
         {% endfor %}

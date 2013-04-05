@@ -1,10 +1,13 @@
-file is required error
 datetime везде
-тексты и внешний вид ерроров в формах
-validation of course form: not null values!!! ;P
+test task editing
+page for moderating
 дизайн формы переделать, форму в один файл
 дизайн кнопки "сабмит"
 заголовки везде одинаковые, как в формах
 get parameters instead of /tab/name/
-
+file form
+menu design
+logo design
+get video id from link
+view feedbacks
 {FULL TODOS HERE}

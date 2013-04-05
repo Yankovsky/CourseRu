@@ -17,9 +17,6 @@ class Course(models.Model):
     approved = models.BooleanField(verbose_name=u'Подтверждение')
     available = models.BooleanField(verbose_name=u'Размещение')
 
-    class Meta:
-        permissions = (('can_apply', 'Can apply for Course'),)
-
     def __repr__(self):
         return "%s %s" % (self.name, str(self.start_date))
     def __unicode__(self):

@@ -4,9 +4,7 @@
         "model": "auth.group",
         "fields": {
             "name": "students",
-            "permissions": [
-                ["can_apply", "main", "course"]
-            ]
+            "permissions": []
         }
     },
     {
@@ -14,9 +12,7 @@
         "model": "auth.group",
         "fields": {
             "name": "instructors",
-            "permissions": [
-                ["add_course", "main", "course"]
-            ]
+            "permissions": []
         }
     },
     {
