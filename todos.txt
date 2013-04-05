@@ -4,7 +4,7 @@ page for moderating
 дизайн формы переделать, форму в один файл
 дизайн кнопки "сабмит"
 заголовки везде одинаковые, как в формах
-get parameters instead of /tab/name/
+get parameters instead of /tab/name/ => ?tab=tab or #tab
 file form
 menu design
 logo design
