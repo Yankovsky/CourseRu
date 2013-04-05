@@ -1,0 +1,11 @@
+<ul>
+    {% for course in list %}
+        <li>
+            <a href="{% url 'instructor.views.course' course.id %}">
+                {{ course.name }}
+            </a>
+        </li>
+    {% empty %}
+        <i>Нет курсов</i>
+    {% endfor %}
+</ul>

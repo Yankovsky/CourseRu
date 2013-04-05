@@ -44,7 +44,7 @@
                             {% if user.is_authenticated %}
                                 <li>
                                     <a href="{% url 'accounts.views.profile' %}" class="btn btn-link">
-                                        {{ user.username }}
+                                        <i class="icon-user"></i>  {{ user.username }}
                                     </a>
                                 </li>
                                 {% if user.userprofile.is_student %}

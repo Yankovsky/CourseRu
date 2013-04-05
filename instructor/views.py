@@ -89,7 +89,6 @@ def course(request, course_id, tab=None, template_name='instructor/course.html')
     else:
         tab = 'main'
 
-    # show materials: documents, videos, infos
     if course in request.user.userprofile.courses.all():
         materials = Material.objects.filter(course=course).filter(appear_date__lte=datetime.utcnow().replace(tzinfo=utc)).order_by('-appear_date')
         videos = Video.objects.filter(material__in=materials).order_by('-material__appear_date')

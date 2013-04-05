@@ -28,12 +28,6 @@ class EditCourseForm(ModelForm):
         fields = ('short_summary', 'description', 'organisation', 'logo', 'start_date', 'end_date', )
         required = ('short_summary', 'description', 'organisation', 'start_date', 'end_date')
 
-    # def clean_short_summary(self):
-    #     short_summary = self.cleaned_data['short_summary'].strip()
-    #     if short_summary == '':
-    #         raise forms.ValidationError(u'Необходимое поле')
-    #     return short_summary
-
     def __init__(self, *args, **kwargs):
         super(EditCourseForm, self).__init__(*args, **kwargs)
         for field in self.fields:
