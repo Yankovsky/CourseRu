@@ -31,15 +31,15 @@
 
     {% if course.approved %}
         <ul class="nav nav-tabs">
-            <li class="{% if tab == 'main' %}active{% endif %}"><a href="#main" data-toggle="tab">Информация</a></li>
-            <li class="{% if tab == 'news' %}active{% endif %}"><a href="#news" data-toggle="tab">Новости</a></li>
-            <li class="{% if tab == 'files' %}active{% endif %}"><a href="#files" data-toggle="tab">Файлы</a></li>
-            <li class="{% if tab == 'videos' %}active{% endif %}"><a href="#videos" data-toggle="tab">Видео</a></li>
-            <li class="{% if tab == 'users' %}active{% endif %}"><a href="#users" data-toggle="tab">Студенты</a></li>
+            <li class="active"><a href="#main" data-toggle="tab">Информация</a></li>
+            <li class=""><a href="#news" data-toggle="tab">Новости</a></li>
+            <li class=""><a href="#files" data-toggle="tab">Файлы</a></li>
+            <li class=""><a href="#videos" data-toggle="tab">Видео</a></li>
+            <li class=""><a href="#users" data-toggle="tab">Студенты</a></li>
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane {% if tab == 'main' %}active{% endif %}" id="main">
+            <div class="tab-pane active" id="main">
                 <table class="table">
                     <thead>
                         <th>Поле</th>
@@ -104,7 +104,7 @@
                 </table>
             </div>
 
-            <div class="tab-pane {% if tab == 'news' %}active{% endif %}" id="news">
+            <div class="tab-pane" id="news">
                 <div class="row">
                     <div class="span12">
                         <p class="pull-right">
@@ -152,7 +152,7 @@
             </div>
 
 
-            <div class="tab-pane {% if tab == 'files' %}active{% endif %}" id="files">
+            <div class="tab-pane" id="files">
                 <div class="row">
                     <div class="span12">
                         <p class="pull-right">
@@ -199,8 +199,7 @@
                 </div>
             </div>
 
-
-            <div class="tab-pane {% if tab == 'videos' %}active{% endif %}" id="videos">
+            <div class="tab-pane" id="videos">
                 <div class="row">
                     <div class="span12">
                         <p class="pull-right">
@@ -247,13 +246,10 @@
                 </div>
             </div>
 
-
-            <div class="tab-pane {% if tab == 'users' %}active{% endif %}" id="users">
+            <div class="tab-pane" id="users">
                 <ul>
                     {% for user in users %}
                         <li>{{ user }} {% if user.userprofile.is_instructor %}<span class="label label-info">Преподаватель</span>{% endif %}</li>
-                    {% empty %}
-                        <i>Нет участников курса</i>
                     {% endfor %}
                 </ul>
             </div>
@@ -288,5 +284,19 @@
             </tbody>
         </table>
     {% endif %}
+
+    <script>
+        // Javascript to enable link to tab
+        var hash = document.location.hash;
+        var prefix = "tab_";
+        if (hash) {
+            $('.nav-tabs a[href='+hash.replace(prefix,"")+']').tab('show');
+            $(hash.replace(prefix,"")).tab('show');
+        }
+        // Change hash for page-reload
+        $('.nav-tabs a').on('shown', function (e) {
+            window.location.hash = e.target.hash.replace("#", "#" + prefix);
+        });
+    </script>
 
 {% endblock %}

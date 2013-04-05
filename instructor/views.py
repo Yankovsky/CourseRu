@@ -29,7 +29,7 @@ def add_course(request, template_name='instructor/addcourse.html', add_course_fo
         if form.is_valid():
             course = form.save(commit=False)
             course.author = request.user
-            course.date = time.strftime("%Y-%m-%d %H:%M:%S")
+            course.date = datetime.utcnow().replace(tzinfo=utc)
             course.approved = False
             course.save()
             request.user.userprofile.courses.add(course) # # # # #
@@ -80,14 +80,8 @@ def delete_course(request, course_id, post_delete_course_redirect=None):
     return HttpResponseRedirect(post_delete_course_redirect)
 
 @instructor_login_required
-def course(request, course_id, tab=None, template_name='instructor/course.html'):
+def course(request, course_id, template_name='instructor/course.html'):
     course = get_object_or_404(Course, pk=course_id)
-
-    if not tab is None:
-        if not tab in ['news', 'main', 'videos', 'users', 'files']:
-            return HttpResponseNotFound()
-    else:
-        tab = 'main'
 
     if course in request.user.userprofile.courses.all():
         materials = Material.objects.filter(course=course).filter(appear_date__lte=datetime.utcnow().replace(tzinfo=utc)).order_by('-appear_date')
@@ -96,7 +90,7 @@ def course(request, course_id, tab=None, template_name='instructor/course.html')
         documents = Document.objects.filter(material__in=materials).order_by('-material__appear_date')
         userprofiles = course.userprofile_set.all()
         users = [userprofile.user for userprofile in userprofiles]
-        return render(request, template_name, {'course': course, 'materials': materials, 'videos': videos, 'infos': infos, 'files': documents, 'tab': tab, 'users': users})
+        return render(request, template_name, {'course': course, 'materials': materials, 'videos': videos, 'infos': infos, 'files': documents, 'users': users})
     else:
         return HttpResponseRedirect(reverse('main.views.course', kwargs={'course_id': course_id}))
 
@@ -130,7 +124,7 @@ def add_news(request, course_id, template_name="instructor/addinfo.html", post_a
             info.save()
 
             if post_add_information_redirect is None:
-                post_add_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id, 'tab': 'news'})
+                post_add_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id})
 
             return HttpResponseRedirect(post_add_information_redirect)
     else:
@@ -157,7 +151,7 @@ def edit_news(request, course_id, info_id, template_name="instructor/editinfo.ht
             form2.save()
 
             if post_edit_information_redirect is None:
-                post_edit_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id, 'tab': 'news'})
+                post_edit_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id})
 
             return HttpResponseRedirect(post_edit_information_redirect)
     else:
@@ -179,7 +173,7 @@ def delete_news(request, course_id, info_id, post_delete_information_redirect=No
     material.delete()
 
     if post_delete_information_redirect is None:
-        post_delete_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id, 'tab': 'news'})
+        post_delete_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id})
 
     return HttpResponseRedirect(post_delete_information_redirect)
 
@@ -207,7 +201,7 @@ def add_video(request, course_id, template_name="instructor/addinfo.html", post_
             video.save()
 
             if post_add_information_redirect is None:
-                post_add_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id, 'tab': 'videos'})
+                post_add_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id})
 
             return HttpResponseRedirect(post_add_information_redirect)
     else:
@@ -234,7 +228,7 @@ def edit_video(request, course_id, video_id, template_name="instructor/editinfo.
             form2.save()
 
             if post_edit_information_redirect is None:
-                post_edit_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id, 'tab': 'videos'})
+                post_edit_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id})
 
             return HttpResponseRedirect(post_edit_information_redirect)
     else:
@@ -256,7 +250,7 @@ def delete_video(request, course_id, video_id, post_delete_information_redirect=
     material.delete()
 
     if post_delete_information_redirect is None:
-        post_delete_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id, 'tab': 'videos'})
+        post_delete_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id})
 
     return HttpResponseRedirect(post_delete_information_redirect)
 
@@ -284,7 +278,7 @@ def add_file(request, course_id, template_name="instructor/addinfo.html", post_a
             file.save()
 
             if post_add_information_redirect is None:
-                post_add_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id, 'tab': 'files'})
+                post_add_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id})
 
             return HttpResponseRedirect(post_add_information_redirect)
     else:
@@ -311,7 +305,7 @@ def edit_file(request, course_id, file_id, template_name="instructor/editinfo.ht
             form2.save()
 
             if post_edit_information_redirect is None:
-                post_edit_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id, 'tab': 'files'})
+                post_edit_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id})
 
             return HttpResponseRedirect(post_edit_information_redirect)
     else:
@@ -333,6 +327,6 @@ def delete_file(request, course_id, file_id, post_delete_information_redirect=No
     material.delete()
 
     if post_delete_information_redirect is None:
-        post_delete_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id, 'tab': 'files'})
+        post_delete_information_redirect = reverse('instructor.views.course', kwargs={'course_id': course_id})
 
     return HttpResponseRedirect(post_delete_information_redirect)

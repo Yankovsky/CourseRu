@@ -1,4 +1,3 @@
-datetime везде
 test task editing
 page for moderating
 дизайн формы переделать, форму в один файл
@@ -10,4 +9,5 @@ menu design
 logo design
 get video id from link
 view feedbacks
+placeholder for video
 {FULL TODOS HERE}
