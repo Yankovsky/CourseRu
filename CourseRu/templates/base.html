@@ -44,8 +44,14 @@
                             <li>
                                 <a href="{% url 'main.views.about' %}" class="btn btn-link">О нас</a>
                             </li>
-
                             {% if user.is_authenticated %}
+                                {% if user.is_staff %}
+                                   <li>
+                                        <a href="{% url 'control.views.index' %}" class="btn btn-link">
+                                            Управление
+                                        </a>
+                                   </li>
+                                {% endif %}
                                 <li>
                                     <a href="{% url 'accounts.views.profile' %}" class="btn btn-link">
                                         <i class="icon-user"></i>  {{ user.username }}
@@ -91,14 +97,16 @@
             </header>
             <div class="container">
                 <div class="row">
-                    {% if messages %}
-                        <ul class="messages unstyled">
+                    <div class="span12">
+                        {% if messages %}
                             {% for message in messages %}
-                                <li{% if message.tags %}
-                                    class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+                                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    {{ message }}
+                                </div>
                             {% endfor %}
-                        </ul>
-                    {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
                 {% block content %}
 

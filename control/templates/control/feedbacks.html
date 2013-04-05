@@ -5,12 +5,20 @@
 {% block content %}
     <table class="table">
         <thead>
+            <th>Дата создания</th>
             <th>Текст отзыва</th>
         </thead>
         <tbody>
             {% for feedback in feedbacks %}
                 <tr>
+                    <td>{{ feedback.date|date:'d.m.Y H:i' }}</td>
                     <td>{{ feedback.body }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <i>Нет отзывов</i>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

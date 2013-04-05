@@ -1,5 +1,4 @@
 test task editing
-page for moderating
 дизайн кнопки "сабмит"
 заголовки везде одинаковые, как в формах
 настроить возврат на нужный таб по возвращению из добавления
@@ -7,12 +6,9 @@ file form
 menu design
 logo design
 get video id from link
-view feedbacks
-view course requests
 placeholder for video
 тайтлы везде проставить нормальные
 неподтвержденные курсы??просто удалить???
 instructor courses tabs hashes
-control panel link
-lost course request ?????
+javascript datetime now
 {FULL TODOS HERE}

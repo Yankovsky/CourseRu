@@ -33,4 +33,5 @@ def feedbacks(request, template_name='control/feedbacks.html'):
 def approve(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     course.approved = True
+    course.save()
     return HttpResponseRedirect(reverse('control.views.courses'))

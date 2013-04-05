@@ -63,6 +63,7 @@ class Information(models.Model):
 
 class Feedback(models.Model):
     body = models.TextField(verbose_name=u'Текст сообщения')
+    date = models.DateTimeField(verbose_name=u'Дата создания')
 
     def __repr__(self):
         return self.body
