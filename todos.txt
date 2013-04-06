@@ -11,6 +11,21 @@ placeholder for video
 неподтвержденные курсы??просто удалить???
 instructor courses tabs hashes
 javascript datetime now
-MAKE COURSE AVAILABLE
-event model
 HEROKU
+
+video, news, documents => ЛЕНТА-самое главное, остальное - вторично
+
+event model
+calendar
+design (in general)
+comments
+forum
+visibility
+apply by request
+course settings (visibility, accessibility)
+emails
+tasks
+tests
+
+comments in code
+tests in django

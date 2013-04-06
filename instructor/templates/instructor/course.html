@@ -98,7 +98,12 @@
                         </tr>
                         <tr>
                             <td>Размещение</td>
-                            <td>{% if course.available %}<i class="icon-ok"></i>{% else %}<i class="icon-remove"></i>{% endif %}</td>
+                            <td>
+                                {% if course.available %}<i class="icon-ok"></i>{% else %}<i class="icon-remove"></i>{% endif %}
+                                {% if not course.available %}
+                                    <a class="btn btn-success" href="{% url 'instructor.views.put_course' course.id %}"><i class="icon-ok icon-white"></i> Разместить</a>
+                                {% endif %}
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -255,34 +260,7 @@
             </div>
         </div>
     {% else %} <!-- unapproved course -->
-        <table class="table">
-            <thead>
-                <th>Поле</th>
-                <th>Значение</th>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Название</td>
-                <td>{{ course.name|default:"<i>Значение не задано</i>" }}</td>
-            </tr>
-            <tr>
-                <td>Автор</td>
-                <td>{{ course.author|default:"<i>Значение не задано</i>" }}</td>
-            </tr>
-            <tr>
-                <td>Заявка на создание курса</td>
-                <td>{{ course.admin_summary|default:"<i>Значение не задано</i>" }}</td>
-            </tr>
-            <tr>
-                <td>Дата создания</td>
-                <td>{% if course.date %}{{ course.date|date:'d.m.Y H:i' }}{% else %}<i>Значение не задано</i>{% endif %}</td>
-            </tr>
-            <tr>
-                <td>Подтверждение</td>
-                <td>{% if course.approved %}<i class="icon-ok"></i>{% else %}<i class="icon-remove"></i>{% endif %}</td>
-            </tr>
-            </tbody>
-        </table>
+        {% include 'instructor/notapprovedcourse.html' %}
     {% endif %}
 
     <script>

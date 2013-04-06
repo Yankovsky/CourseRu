@@ -20,6 +20,26 @@ def instructor_login_required(function):
             return function(request, *args, **kw)
     return wrapper
 
+@instructor_login_required
+def put_course(request, course_id, post_put_course_redirect=None):
+    course = get_object_or_404(Course, pk=course_id)
+
+    if not course.approved:
+        return HttpResponseForbidden()
+
+    if not course in request.user.userprofile.courses.all():
+        return HttpResponseForbidden()
+
+    if course.available:
+        return HttpResponseForbidden()
+
+    course.available = True
+    course.save()
+
+    if post_put_course_redirect is None:
+        post_put_course_redirect = reverse('instructor.views.course', {'course_id': course_id})
+
+    return HttpResponseRedirect(post_put_course_redirect)
 
 @instructor_login_required
 def add_course(request, template_name='instructor/addcourse.html', add_course_form=AddCourseForm,

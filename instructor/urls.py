@@ -3,7 +3,7 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('instructor.views',
                        url(r'^courses/new/$', 'add_course'),
                        url(r'^courses/(?P<course_id>\d+)/$', 'course'),
-                       url(r'^courses/(?P<course_id>\d+)/tab/(?P<tab>\w+)/$', 'course'),
+                       url(r'^courses/(?P<course_id>\d+)/put/$', 'put_course'),
                        url(r'^courses/(?P<course_id>\d+)/edit/$', 'edit_course'),
                        url(r'^courses/(?P<course_id>\d+)/delete/$', 'delete_course'),
                        url(r'^courses/$', 'courses'),

@@ -1,4 +1,4 @@
-<form action='{{ action }}' method='post' class='form-horizontal'>
+<form action='{{ action }}' method='post' class='form-horizontal' {{ multipart }}>
     <fieldset>
         <legend>{{ legend }}</legend>
         {% csrf_token %}

@@ -3,5 +3,5 @@
 {% block title %}CourseRu | Редактирование курса{% endblock %}
 
 {% block content %}
-    {% include 'horizontal_form.html' with form=form legend='Редактирование курса' submit='Сохранить' %}
+    {% include 'horizontal_form.html' with form=form legend='Редактирование курса' submit='Сохранить' multipart='enctype="multipart/form-data"' %}
 {% endblock %}

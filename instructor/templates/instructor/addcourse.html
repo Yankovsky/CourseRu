@@ -3,5 +3,5 @@
 {% block title %}CourseRu | Создание нового курса{% endblock %}
 
 {% block content %}
-    {% include 'horizontal_form.html' with form=form legend='Заявка на создание нового курса' submit='Отправить' %}
+    {% include 'horizontal_form.html' with form=form legend='Заявка на создание нового курса' submit='Отправить' multipart='enctype="multipart/form-data"' %}
 {% endblock %}
