@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-from django.forms import ModelForm, forms
+from django.forms import ModelForm, forms, widgets
+from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
 from main.models import *
 
 class AddCourseForm(ModelForm):
@@ -35,6 +37,16 @@ class EditCourseForm(ModelForm):
         for field in self.Meta.required:
             self.fields[field].required = True
 
+
+class FileUploadWidget(widgets.FileInput):
+    def render(self, name, value, attrs=None):
+        # gets id if it exists
+        id_part = u''
+        if attrs and 'id' in attrs:
+            id_part = u'id="'+attrs['id']+u'"'
+
+        return render_to_string('forms/fileupload.html', {'id': id_part, 'name': name})
+
 class MaterialForm(ModelForm):
     class Meta:
         model = Material
@@ -56,6 +68,7 @@ class InformationForm(ModelForm):
         for field in self.fields:
             self.fields[field].error_messages = {'required' : u'Необходимое поле', 'invalid': u'Некоректный формат данных'}
 
+
 class VideoForm(ModelForm):
     class Meta:
         model = Video
@@ -66,6 +79,7 @@ class VideoForm(ModelForm):
         for field in self.fields:
             self.fields[field].error_messages = {'required' : u'Необходимое поле', 'invalid': u'Некоректный формат данных'}
 
+
 class DocumentForm(ModelForm):
     class Meta:
         model = Document
@@ -73,5 +87,6 @@ class DocumentForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(DocumentForm, self).__init__(*args, **kwargs)
+        self.fields['doc'].widget = FileUploadWidget()
         for field in self.fields:
             self.fields[field].error_messages = {'required' : u'Необходимое поле', 'invalid': u'Некоректный формат данных'}

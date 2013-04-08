@@ -104,7 +104,7 @@ def course(request, course_id, template_name='instructor/course.html'):
     course = get_object_or_404(Course, pk=course_id)
 
     if course in request.user.userprofile.courses.all():
-        materials = Material.objects.filter(course=course).filter(appear_date__lte=datetime.utcnow().replace(tzinfo=utc)).order_by('-appear_date')
+        materials = Material.objects.filter(course=course).order_by('-appear_date')
         videos = Video.objects.filter(material__in=materials).order_by('-material__appear_date')
         infos = Information.objects.filter(material__in=materials).order_by('-material__appear_date')
         documents = Document.objects.filter(material__in=materials).order_by('-material__appear_date')
