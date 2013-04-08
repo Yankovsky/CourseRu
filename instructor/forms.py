@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from CourseRu.widgets import FileUploadWidget
 from django.forms import ModelForm, forms, widgets
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
@@ -32,20 +33,11 @@ class EditCourseForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(EditCourseForm, self).__init__(*args, **kwargs)
+        self.fields['logo'].widget = FileUploadWidget()
         for field in self.fields:
             self.fields[field].error_messages = {'required' : u'Необходимое поле', 'invalid': u'Некоректный формат данных'}
         for field in self.Meta.required:
             self.fields[field].required = True
-
-
-class FileUploadWidget(widgets.FileInput):
-    def render(self, name, value, attrs=None):
-        # gets id if it exists
-        id_part = u''
-        if attrs and 'id' in attrs:
-            id_part = u'id="'+attrs['id']+u'"'
-
-        return render_to_string('forms/fileupload.html', {'id': id_part, 'name': name})
 
 class MaterialForm(ModelForm):
     class Meta:

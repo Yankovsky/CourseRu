@@ -3,5 +3,40 @@
 {% block title %}CourseRu | Добавление информации к курсу {{ course.name }}{% endblock %}
 
 {% block content %}
-    {% include 'twice_form.html' with form1=form1 form2=form2 legend='Редактирование информации для курса' submit='Сохранить' %}
-{% endblock %}
+    <form action='{{ action }}' method='post' class='form-horizontal' enctype="multipart/form-data">
+        <fieldset>
+            <legend>Редактирование материала</legend>
+            {% csrf_token %}
+            {% for field in form1 %}
+                <div class='control-group {%if field.errors %}error{% endif %}'>
+                    <label class='control-label' for='{{ field.name }}'>{{ field.label }}</label>
+                    <div class='controls'>
+                        {{ field }}
+                    </div>
+                    <div class="controls">
+                        {% for error in field.errors %}
+                            <p class="text-error">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            {% for field in form2 %}
+                <div class='control-group {%if field.errors %}error{% endif %}'>
+                    <label class='control-label' for='{{ field.name }}'>{{ field.label }}</label>
+                    <div class='controls'>
+                        {{ field }}
+                    </div>
+                    <div class="controls">
+                        {% for error in field.errors %}
+                            <p class="text-error">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class='control-group'>
+                <div class='controls'>
+                    <button type='submit' class='btn btn-primary'><i class="icon-plus icon-ok"></i> Сохранить</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>{% endblock %}
