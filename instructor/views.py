@@ -37,7 +37,7 @@ def put_course(request, course_id, post_put_course_redirect=None):
     course.save()
 
     if post_put_course_redirect is None:
-        post_put_course_redirect = reverse('instructor.views.course', {'course_id': course_id})
+        post_put_course_redirect = reverse('instructor.views.course', kwargs={'course_id': course.id})
 
     return HttpResponseRedirect(post_put_course_redirect)
 
