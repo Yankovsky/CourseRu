@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from CourseRu.widgets import FileUploadWidget
+from CourseRu.widgets import FileUploadWidget, DateTimeWidget
 from django.forms import ModelForm, forms, widgets
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
@@ -46,6 +46,9 @@ class MaterialForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(MaterialForm, self).__init__(*args, **kwargs)
+
+        self.fields['appear_date'].widget = DateTimeWidget()
+
         for field in self.fields:
             self.fields[field].error_messages = {'required' : u'Необходимое поле', 'invalid': u'Некоректный формат данных'}
 
@@ -79,6 +82,8 @@ class DocumentForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(DocumentForm, self).__init__(*args, **kwargs)
+
         self.fields['doc'].widget = FileUploadWidget()
+
         for field in self.fields:
             self.fields[field].error_messages = {'required' : u'Необходимое поле', 'invalid': u'Некоректный формат данных'}

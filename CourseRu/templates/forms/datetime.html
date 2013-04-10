@@ -1,0 +1,14 @@
+<div id="datetimepicker1" class="input-append date">
+    <input data-format="dd.MM.yyyy hh:mm:ss" type="text" {{ id }} name="{{ name }}" value="{{ value }}">
+    <span class="add-on">
+      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+      </i>
+    </span>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $('#datetimepicker1').datetimepicker({
+            language: 'en'
+        });
+    });
+</script>
