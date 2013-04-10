@@ -1,5 +1,5 @@
 <div id="{{ picker_id }}" class="input-append date">
-    <input data-format="dd/MM/yyyy hh:mm:ss" type="text" {{ id }} name="{{ name }}" value="{{ value|date:'d/m/Y H:i:s' }}">
+    <input data-format="dd/MM/yyyy" type="text" {{ id }} name="{{ name }}" value="{{ value|date:'d/m/Y' }}">
     <span class="add-on">
       <i data-time-icon="icon-time" data-date-icon="icon-calendar">
       </i>
@@ -8,7 +8,8 @@
 <script type="text/javascript">
     $(function() {
         $('#{{ picker_id }}').datetimepicker({
-            language: 'en'
+            language: 'en',
+            pickTime: false
         });
     });
 </script>

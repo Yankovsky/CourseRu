@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from CourseRu.widgets import FileUploadWidget, DateTimeWidget
+from CourseRu.widgets import FileUploadWidget, DateTimeWidget, DateWidget
 from django.forms import ModelForm, forms, widgets
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
@@ -33,7 +33,11 @@ class EditCourseForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(EditCourseForm, self).__init__(*args, **kwargs)
+
         self.fields['logo'].widget = FileUploadWidget()
+        self.fields['start_date'].widget = DateWidget(picker_id='datepicker1')
+        self.fields['end_date'].widget = DateWidget(picker_id='datepicker2')
+
         for field in self.fields:
             self.fields[field].error_messages = {'required' : u'Необходимое поле', 'invalid': u'Некоректный формат данных'}
         for field in self.Meta.required:

@@ -2,6 +2,16 @@
 
 {% block title %}CourseRu | Добавление информации к курсу {{ course.name }}{% endblock %}
 
+{% block additional_header %}
+    <!-- File Upload form -->
+    <link href="/static/bootstrap-fileupload/bootstrap-fileupload.min.css" rel="stylesheet">
+    <script src="/static/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
+
+    <!-- Calendar form -->
+    <link href="/static/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <script src="/static/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+{% endblock %}
+
 {% block content %}
     <form action='{{ action }}' method='post' class='form-horizontal' enctype="multipart/form-data">
         <fieldset>
@@ -35,7 +45,7 @@
             {% endfor %}
             <div class='control-group'>
                 <div class='controls'>
-                    <button type='submit' class='btn btn-primary'><i class="icon-plus icon-ok"></i> Сохранить</button>
+                    <button type='submit' class='btn btn-primary'><i class="icon-ok icon-white"></i> Сохранить</button>
                 </div>
             </div>
         </fieldset>

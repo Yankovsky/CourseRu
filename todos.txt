@@ -1,8 +1,6 @@
-test task editing
 дизайн кнопки "сабмит"
 заголовки везде одинаковые, как в формах
 настроить возврат на нужный таб по возвращению из добавления
-file form
 menu design
 logo design
 get video id from link
@@ -10,8 +8,9 @@ placeholder for video
 тайтлы везде проставить нормальные
 неподтвержденные курсы??просто удалить???
 instructor courses tabs hashes
-javascript datetime now
-HEROKU
+date after today bug
+file upload form edit bug
+translate calendar
 
 video, news, documents => ЛЕНТА-самое главное, остальное - вторично
 
